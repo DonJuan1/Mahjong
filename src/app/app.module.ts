@@ -6,12 +6,14 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { GamesComponent } from './games/games.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { GamestatesComponent } from './gamestates/gamestates.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GamesComponent,
-    NavbarComponent
+    NavbarComponent,
+    GamestatesComponent
   ],
   imports: [
     BrowserModule,

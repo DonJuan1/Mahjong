@@ -10,4 +10,8 @@ export class MahjongApiService {
     return this.http.get('http://mahjongmayhem.herokuapp.com/gamestates');
   }
 
+  getGames() {
+    return this.http.get('http://mahjongmayhem.herokuapp.com/games');
+  }
+
 }
