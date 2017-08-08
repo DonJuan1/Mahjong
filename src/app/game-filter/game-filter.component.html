@@ -1,0 +1,30 @@
+<div class="panel panel-default filterContainer">
+  <div class="panel-heading">Filter</div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="row">
+          <div class="col-md-12">
+            <strong>Toggle me</strong>
+            <div class="row">
+              <div class="col-md-8 col-sm-4 col-xs-5">
+                <label for="tMeBy" style="font-weight: normal;">Created:</label>
+              </div>
+              <div class="col-md-4 col-xs-4">
+                <input id="tMeBy" type="checkbox" (change)="toggle()" [(ngModel)]="createdByMe">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8 col-sm-4 col-xs-5">
+                <label for="tJoined" style="font-weight: normal;">Joined:</label>
+              </div>
+              <div class="col-md-4 col-xs-4">
+                <input id="tJoined" type="checkbox" (change)="toggle()" [(ngModel)]="joinedByMe">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

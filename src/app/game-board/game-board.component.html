@@ -1,0 +1,3 @@
+<div class="gameboard">
+  <GameBoardTileComponent *ngFor="let t of tilesToDraw" [tile]="t" [clickable]="!viewOnly" (clicked)="canSelect($event)"></GameBoardTileComponent>
+</div>

@@ -1,0 +1,19 @@
+.makeFull{
+    height: 100%;
+    background-color: lightblue
+}
+
+.filler{
+    height: calc(100% - 60px);
+    width: 100%;
+    margin: 40px 0px
+}
+
+.gameboard{
+    position: relative;
+    height: 520px;
+    width: 540px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
