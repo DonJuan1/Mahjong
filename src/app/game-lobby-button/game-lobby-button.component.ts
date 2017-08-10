@@ -48,7 +48,7 @@ export class GameLobbyButtonComponent {
     return this.startGame();
   }
 
-  private inGame() {
+  private inGame(): boolean {
     return this.game.players.map(item => item._id).indexOf(this.api.email) > -1;
   }
 
