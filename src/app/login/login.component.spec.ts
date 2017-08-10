@@ -1,3 +1,6 @@
+import { ApiServiceMock } from './../Mock/ApiServiceMock';
+import { ApiService } from './../api.service';
+import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
@@ -8,9 +11,15 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ]
-    })
-    .compileComponents();
+      declarations: [
+        LoginComponent
+      ],
+      imports: [RouterTestingModule]
+    }).overrideComponent(LoginComponent, {
+      set: {
+        providers: [{ provide: ApiService, useClass: ApiServiceMock }]
+      }
+    }).compileComponents();
   }));
 
   beforeEach(() => {

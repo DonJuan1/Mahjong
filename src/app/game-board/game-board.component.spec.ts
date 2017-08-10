@@ -1,3 +1,6 @@
+import { ApiServiceMock } from './../Mock/ApiServiceMock';
+import { ApiService } from './../api.service';
+import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameBoardComponent } from './game-board.component';
@@ -6,11 +9,17 @@ describe('GameBoardComponent', () => {
   let component: GameBoardComponent;
   let fixture: ComponentFixture<GameBoardComponent>;
 
-  beforeEach(async(() => {
+beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameBoardComponent ]
-    })
-    .compileComponents();
+      declarations: [
+       GameBoardComponent
+      ],
+      imports: [RouterTestingModule]
+    }).overrideComponent(GameBoardComponent, {
+      set: {
+        providers: [{ provide: ApiService, useClass: ApiServiceMock }]
+      }
+    }).compileComponents();
   }));
 
   beforeEach(() => {

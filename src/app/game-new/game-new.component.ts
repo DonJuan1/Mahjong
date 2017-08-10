@@ -42,7 +42,7 @@ export class GameNewComponent implements OnInit {
     this.tiles = template.tiles;
   }
 
-  newGame() {
+  newGame(): boolean {
     this.tiles = null;
 
     this.model = new Game();
@@ -51,6 +51,8 @@ export class GameNewComponent implements OnInit {
     if (this.gameTemplates.length > 0) {
       this.model.gameTemplate.id = this.gameTemplates[0].id;
       this.onChange(this.gameTemplates[0].id);
+      return true;
     }
+    return false;
   }
 }
