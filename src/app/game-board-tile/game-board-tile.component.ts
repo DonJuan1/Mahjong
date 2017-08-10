@@ -35,7 +35,7 @@ export class GameBoardTileComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if (this.tile.tile != null) {
+    if (this.tile != undefined && this.tile.tile != null) {
       this.background = `${this.tile.tile.suit}-${this.tile.tile.name}`.toLowerCase();
     }
 
@@ -44,12 +44,15 @@ export class GameBoardTileComponent implements OnInit {
   }
 
   getStyle(): any {
-    return {
-      'left': ((this.tile.xPos) * 18) + (4 * this.tile.zPos) + this.randomNumber + 'px',
-      'top': ((this.tile.yPos) * 26 - (5 * this.tile.zPos)) + this.randomNumber + 'px',
-      'z-index': ((this.tile.zPos * 100) - this.tile.xPos + this.tile.yPos) + 1000,
-      'transform': `rotate(${this.randomNumber}deg)`,
+    if (this.tile != undefined) {
+      return {
+        'left': ((this.tile.xPos) * 18) + (4 * this.tile.zPos) + this.randomNumber + 'px',
+        'top': ((this.tile.yPos) * 26 - (5 * this.tile.zPos)) + this.randomNumber + 'px',
+        'z-index': ((this.tile.zPos * 100) - this.tile.xPos + this.tile.yPos) + 1000,
+        'transform': `rotate(${this.randomNumber}deg)`,
+      }
     }
+
   }
 
   canSelect() {

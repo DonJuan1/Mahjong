@@ -4,17 +4,22 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameListComponent } from './game-list.component';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { GameFilterComponent } from '../game-filter/game-filter.component';
+import { FormsModule } from '@angular/forms';
 
 describe('GameListComponent', () => {
   let component: GameListComponent;
   let fixture: ComponentFixture<GameListComponent>;
 
- beforeEach(async(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        GameListComponent
+        GameListComponent,
+        NavbarComponent,
+        GameFilterComponent
       ],
-      imports: [RouterTestingModule]
+      imports: [RouterTestingModule, FormsModule]
     }).overrideComponent(GameListComponent, {
       set: {
         providers: [{ provide: ApiService, useClass: ApiServiceMock }]

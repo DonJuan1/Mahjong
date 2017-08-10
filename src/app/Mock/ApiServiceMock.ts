@@ -5,7 +5,7 @@ import { Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { Headers, Http, Response } from '@angular/http';
 import { Tile } from '../models/tile';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
@@ -16,12 +16,12 @@ export class ApiServiceMock {
     private state: GameState[];
     private template: GameTemplate[]
     constructor() {
-         this.games = [];
-         this.tiles = [];
-         this.state = [];
-         this.template = [];
+        this.games = [];
+        this.tiles = [];
+        this.state = [];
+        this.template = [];
     }
-    
+
     get email(): string {
         return 'test@test.nl';
     }
@@ -37,101 +37,52 @@ export class ApiServiceMock {
 
 
     public getGames(state: string, createdByMe: boolean, joinedByMe: boolean): Observable<Game[]> {
-       var dummy = new Game();
-       var dummy2 = new Game();
-       dummy._id = '1';
-       dummy.createdBy = {
-             _id: '0',
-             name: 'Jonathan',
-            numberOfMatches: 0
-       }
-       dummy.createdOn = '09-08-2017'
-       dummy.minPlayers = 2
-       dummy.maxPlayers = 4
-       dummy.state = 'open'
-        dummy.players = [
-            {
-            _id: '1',
-             name: 'Jasper',
-            numberOfMatches: 5
-       },
-        {
-             _id: '0',
-             name: 'Jonathan',
-            numberOfMatches: 0
-       }
-        ]
-       dummy2._id = '2'
-       dummy2.createdBy = {
-            _id: '1',
-             name: 'Jasper',
-            numberOfMatches: 5
-       }
-        dummy2.createdOn = '10-07-2017'
-        dummy2.endedOn = '15-07-2017'
-        dummy2.startedOn = '13-07-2017'
-        dummy2.minPlayers = 2
-        dummy2.maxPlayers = 2
-        dummy2.players = [
-            {
-            _id: '1',
-             name: 'Jasper',
-            numberOfMatches: 5
-       },
-        {
-             _id: '0',
-             name: 'Jonathan',
-            numberOfMatches: 0
-       }
-        ]
-        dummy2.state = 'finished'
-       
-       this.games[0] = dummy;
-       this.games[1] = dummy2;
+        this.createGames();
         return Observable.of(new Object()).mapTo(this.games);
     }
 
     public getGame(gameId: number): Observable<Game> {
+        this.createGames();
         return Observable.of(new Object()).mapTo(this.games[gameId]);
     }
 
-    
 
-    public createGame(template: string, minPlayers: number, maxPlayers: number):Observable<Game> {
+
+    public createGame(template: string, minPlayers: number, maxPlayers: number): Observable<Game> {
         var dummy = new Game();
-         dummy._id = '2';
-       dummy.createdBy = {
-             _id: '0',
-             name: 'Jonathan',
+        dummy._id = '2';
+        dummy.createdBy = {
+            _id: '0',
+            name: 'Jonathan',
             numberOfMatches: 0
-       }
-       dummy.createdOn = '09-08-2017'
-       dummy.minPlayers = minPlayers
-       dummy.maxPlayers = maxPlayers
-       dummy.players = [
-           {
-            _id: '1',
-             name: 'Jasper',
-            numberOfMatches: 5
-       },
-        {
-             _id: '0',
-             name: 'Jonathan',
-            numberOfMatches: 0
-       }
-       ]
-       dummy.state = 'open'
+        }
+        dummy.createdOn = '09-08-2017'
+        dummy.minPlayers = minPlayers
+        dummy.maxPlayers = maxPlayers
+        dummy.players = [
+            {
+                _id: '1',
+                name: 'Jasper',
+                numberOfMatches: 5
+            },
+            {
+                _id: '0',
+                name: 'Jonathan',
+                numberOfMatches: 0
+            }
+        ]
+        dummy.state = 'open'
 
         return Observable.of(new Object()).mapTo(dummy);
 
-}
+    }
     public gameTiles(gameId: string): Observable<Tile[]> {
         return Observable.of(new Object()).mapTo(this.getTiles());
     }
 
-     public matchTiles(gameId: string, tile1Id: string, tile2Id: string): Observable<boolean> {
-         return Observable.of(new Object()).mapTo(true);
-     }
+    public matchTiles(gameId: string, tile1Id: string, tile2Id: string): Observable<boolean> {
+        return Observable.of(new Object()).mapTo(true);
+    }
 
     public getGameStates(): Observable<GameState[]> {
         var state1 = new GameState();
@@ -147,7 +98,7 @@ export class ApiServiceMock {
         this.state[1] = state2;
         this.state[2] = state3;
         return Observable.of(new Object()).mapTo(this.state);
-        
+
     }
 
     public getTemplates(): Observable<GameTemplate[]> {
@@ -162,8 +113,8 @@ export class ApiServiceMock {
 
         return Observable.of(new Object()).mapTo(this.template);
     }
-    public getTiles(): Tile[]{
-var t1 = new Tile();
+    public getTiles(): Tile[] {
+        var t1 = new Tile();
         var t2 = new Tile();
         t1._id = '0';
         t1.xPos = 1;
@@ -189,5 +140,60 @@ var t1 = new Tile();
         this.tiles[0] = t1;
         this.tiles[1] = t2;
         return this.tiles;
+    }
+
+    public createGames(): Game[] {
+        var dummy = new Game();
+        var dummy2 = new Game();
+        dummy._id = '1';
+        dummy.createdBy = {
+            _id: '0',
+            name: 'Jonathan',
+            numberOfMatches: 0
+        }
+        dummy.createdOn = '09-08-2017'
+        dummy.minPlayers = 2
+        dummy.maxPlayers = 4
+        dummy.state = 'open'
+        dummy.players = [
+            {
+                _id: '1',
+                name: 'Jasper',
+                numberOfMatches: 5
+            },
+            {
+                _id: '0',
+                name: 'Jonathan',
+                numberOfMatches: 0
+            }
+        ]
+        dummy2._id = '2'
+        dummy2.createdBy = {
+            _id: '1',
+            name: 'Jasper',
+            numberOfMatches: 5
+        }
+        dummy2.createdOn = '10-07-2017'
+        dummy2.endedOn = '15-07-2017'
+        dummy2.startedOn = '13-07-2017'
+        dummy2.minPlayers = 2
+        dummy2.maxPlayers = 2
+        dummy2.players = [
+            {
+                _id: '1',
+                name: 'Jasper',
+                numberOfMatches: 5
+            },
+            {
+                _id: '0',
+                name: 'Jonathan',
+                numberOfMatches: 0
+            }
+        ]
+        dummy2.state = 'finished'
+
+        this.games[0] = dummy;
+        this.games[1] = dummy2;
+        return this.games;
     }
 }
