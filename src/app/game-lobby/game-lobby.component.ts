@@ -10,7 +10,6 @@ import { ApiService } from '../api.service';
 @Component({
   selector: 'app-game-lobby',
   templateUrl: './game-lobby.component.html',
-  styleUrls: ['./game-lobby.component.scss']
 })
 export class GameLobbyComponent implements OnInit, OnDestroy {
 

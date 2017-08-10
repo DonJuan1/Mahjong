@@ -7,7 +7,6 @@ import { Game } from '../models/game';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
 
@@ -27,6 +26,12 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     this.api.logout();
     this.router.navigate(['login']);
+  }
+
+  switchTheme(themeUrl) {
+    var link = document.getElementById('theme');
+    link.setAttribute('href', themeUrl);
+    return false;
   }
 
 }

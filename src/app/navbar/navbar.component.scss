@@ -1,15 +1,9 @@
-@import '../../styles';
-
 a{
    cursor: pointer;
 }
 
 .active{
   font-weight: 600;
-}
-
-.navbar{
-  background-color: $corp-color ;
 }
 
 .navbar .divider-vertical {

@@ -1,5 +1,5 @@
 .tile{
-      background: url("http://mahjongmayhem.herokuapp.com/Tiles_sprite3.png");
+      background: url($tiles-url);
       background-size: cover;
       position:absolute;
       width:40px; height:55px;

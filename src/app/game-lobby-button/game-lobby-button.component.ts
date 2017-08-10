@@ -6,7 +6,6 @@ import { ApiService } from '../api.service';
 @Component({
   selector: 'app-game-lobby-button',
   templateUrl: './game-lobby-button.component.html',
-  styleUrls: ['./game-lobby-button.component.scss']
 })
 export class GameLobbyButtonComponent {
 

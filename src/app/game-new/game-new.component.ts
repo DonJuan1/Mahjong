@@ -9,7 +9,6 @@ import { ApiService } from '../api.service';
 @Component({
   selector: 'app-game-new',
   templateUrl: './game-new.component.html',
-  styleUrls: ['./game-new.component.scss']
 })
 export class GameNewComponent implements OnInit {
 

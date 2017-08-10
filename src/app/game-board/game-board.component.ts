@@ -6,8 +6,7 @@ import { ApiService } from "../api.service";
 
 @Component({
   selector: 'app-game-board',
-  templateUrl: './game-board.component.html',
-  styleUrls: ['./game-board.component.scss']
+  templateUrl: './game-board.component.html'
 })
 export class GameBoardComponent {
 

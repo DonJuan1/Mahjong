@@ -18,7 +18,6 @@ import { Tile } from '../models/tile';
     )
   ],
   templateUrl: './game-board-tile.component.html',
-  styleUrls: ['./game-board-tile.component.scss']
 })
 
 export class GameBoardTileComponent implements OnInit {
