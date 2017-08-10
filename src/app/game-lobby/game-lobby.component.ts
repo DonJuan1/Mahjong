@@ -51,8 +51,8 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
   private openSocket() {
     this.socket = io(`${this.api.host}?gameId=${this.game._id}`);
 
-    this.socket.on('playerJoined', data => console.log(data));
-    this.socket.on('match', data => console.log(data));
+    this.socket.on('playerJoined', data => this.playerJoined(data));
+    this.socket.on('match', data => this.matchFound(data));
     this.socket.on('start', () => this.gameStarted(this.game));
     this.socket.on('end', () => this.gameEnded(this.game));
   }
@@ -60,8 +60,15 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
   /////////////////
   // Socket methods
 
-  matchFound(game: Game, tiles: Tile[]) {
+  playerJoined(data) {
+    this.game.players.push(data);
+  }
 
+  matchFound(data) {
+    data.forEach(tile => {
+      const found = this.game.tiles.find(_tile => _tile._id === tile._id);
+      found.match = tile.match;
+    });
   }
 
   inGame() {
@@ -93,9 +100,8 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
   // Event Handlers
 
   onMatched(tiles: Tile[]) {
-    this.api.matchTiles(this.game._id, tiles[0]._id, tiles[1]._id).subscribe(error => {
+    this.api.matchTiles(this.game._id, tiles[0]._id, tiles[1]._id).subscribe(message => {
       //this.toastr.error(JSON.parse(error._body).message);
-      console.log(error);
     });
   }
 

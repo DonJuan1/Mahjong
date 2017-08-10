@@ -15,12 +15,6 @@ export class Tile {
     foundOn: Date
   };
 
-  isMatched: boolean;
-
   forceShown = null;
   shownAtTime = null;
-
-  constructor() {
-    this.isMatched = false;
-  }
 }

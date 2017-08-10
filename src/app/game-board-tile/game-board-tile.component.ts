@@ -49,6 +49,7 @@ export class GameBoardTileComponent implements OnInit {
       'top': ((this.tile.yPos) * 26 - (5 * this.tile.zPos)) + this.randomNumber + 'px',
       'z-index': ((this.tile.zPos * 100) - this.tile.xPos + this.tile.yPos) + 1000,
       'transform': `rotate(${this.randomNumber}deg)`,
+      'display': `${this.visable}`
     }
   }
 
@@ -58,5 +59,13 @@ export class GameBoardTileComponent implements OnInit {
     }
 
     this.clicked.emit(this);
+  }
+
+  get visable() {
+    if (this.tile.match == undefined) {
+      return 'block'
+    } else {
+      return 'none'
+    }
   }
 }

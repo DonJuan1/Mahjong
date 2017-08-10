@@ -21,10 +21,11 @@ export class GameBoardComponent {
     if (this._tiles != null) {
       this.drawTile(0);
     }
-
   }
 
   @Input() viewOnly = false;
+
+  @Output() tilesMatched: EventEmitter<Tile[]> = new EventEmitter();
 
   public tilesToDraw: Tile[];
 
@@ -34,19 +35,23 @@ export class GameBoardComponent {
   }
 
   canSelect(component: GameBoardTileComponent) {
-    var clickable = this.isClickable(component.tile.xPos, component.tile.yPos, component.tile.zPos)
+    var clickable = this.can(component)
     if (clickable) {
       if (this.clickedTile == undefined) {
         this.clickedTile = component;
         this.clickedTile.isSelected = true;
       } else {
-        var isMatch = this.MatchMaker(this.clickedTile, component);
-        this.clickedTile.isSelected = false;
-        this.clickedTile = undefined;
+        if (this.clickedTile != component) {
+          var isMatch = this.MatchMaker(this.clickedTile, component);
+        }
 
         if (isMatch) {
-          console.log("Match!♫♦b○À♫À╣Õ♀x7");
+          var matchedTiles = [this.clickedTile.tile, component.tile];
+          this.tilesMatched.emit(matchedTiles);
         }
+
+        this.clickedTile.isSelected = false;
+        this.clickedTile = undefined;
       }
     }
   }
@@ -57,47 +62,52 @@ export class GameBoardComponent {
     setTimeout(() => { this.drawTile(index + 1) });
   }
 
-  private isClickable(px, py, pz): boolean {
-    var match = true;
-    for (var l = 0; l < 3; l++) {
-      var tile;
-      if (tile = this._tiles.find(tile => tile.xPos == (px - 2) && tile.yPos == ((py - 1) + l) && tile.zPos == pz) != undefined) {
+  private MatchMaker(selectedTile, compareTile): boolean {
+    return selectedTile.tile.tile.name == compareTile.tile.tile.name &&
+      (selectedTile.tile.tile.suit == compareTile.tile.tile.suit || (selectedTile.tile.tile.matchesWholeSuit))
+  }
 
-        if (match) {
-          for (var r = 0; r < 3; r++) {
-            if (tile = this._tiles.find(tile => tile.xPos == (px + 2) && tile.yPos == ((py - 1) + r) && tile.zPos == pz) != undefined) {
-              match = false;
-            }
-          }
+
+  private can(tile: GameBoardTileComponent): boolean {
+    let can = true;
+
+    let hasRight = false;
+    let hasLeft = false;
+
+    const tiles = this._tiles
+      .filter(item => item.match == undefined && item._id !== tile.tile._id)
+      .filter(item => [tile.tile.zPos, tile.tile.zPos + 1].indexOf(item.zPos) > -1)
+      .filter(item => [tile.tile.yPos - 1, tile.tile.yPos, tile.tile.yPos + 1].indexOf(item.yPos) > -1)
+      .filter(item => [tile.tile.xPos - 2, tile.tile.xPos - 1, tile.tile.xPos, tile.tile.xPos + 1, tile.tile.xPos + 2].indexOf(item.xPos) > -1);
+
+    tiles.forEach(item => {
+      if (item.zPos === tile.tile.zPos) {
+        if (item.xPos === tile.tile.xPos + 2) {
+          hasRight = true;
+        } else if (item.xPos === tile.tile.xPos - 2) {
+          hasLeft = true;
+        }
+
+        if (hasRight && hasLeft) {
+          can = false;
+          return false;
+        }
+      } else if (item.zPos === tile.tile.zPos + 1) {
+        if ([tile.tile.yPos - 1, tile.tile.yPos, tile.tile.yPos + 1].indexOf(item.yPos) > -1 &&
+          [tile.tile.xPos - 1, tile.tile.xPos, tile.tile.xPos + 1].indexOf(item.xPos) > -1) {
+          can = false;
+          return false;
         }
       }
-    }
+    });
 
-    if (match) {
-      for (var u = 0; u < 9; u++) {
-        var left = -1 + Math.floor((u / 3));
-        if (tile = this._tiles.find(tile => tile.xPos == (px + left) && tile.yPos == ((py - 1) + (u % 3)) && tile.zPos == pz + 1) != undefined) {
-          match = false;
-        }
-      }
-    }
-
-    return match;
+    return can;
   }
-  public MatchMaker(selectedTile, compareTile): boolean {
-    var match = false;
 
+  private hint() {
 
-    if (selectedTile.tile.tile.name == compareTile.tile.tile.name && selectedTile.tile.tile.suit == compareTile.tile.tile.suit) {
-      match = true;
-    }
-
-    if (selectedTile.tile.tile.matchesWholeSuit && selectedTile.tile.tile.suit == compareTile.tile.tile.suit) {
-      match = true;
-    }
-
-    return match;
   }
+
 }
 
 
