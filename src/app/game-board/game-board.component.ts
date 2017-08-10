@@ -34,7 +34,7 @@ export class GameBoardComponent {
   }
 
   canSelect(component: GameBoardTileComponent) {
-    var clickable = this.can(component)
+    var clickable = this.can(component.tile)
     if (clickable) {
       if (this.clickedTile == undefined) {
         this.clickedTile = component;
@@ -67,23 +67,23 @@ export class GameBoardComponent {
   }
 
 
-  private can(tile: GameBoardTileComponent): boolean {
+  private can(tile: Tile): boolean {
     let can = true;
 
     let hasRight = false;
     let hasLeft = false;
 
     const tiles = this._tiles
-      .filter(item => item.match == undefined && item._id !== tile.tile._id)
-      .filter(item => [tile.tile.zPos, tile.tile.zPos + 1].indexOf(item.zPos) > -1)
-      .filter(item => [tile.tile.yPos - 1, tile.tile.yPos, tile.tile.yPos + 1].indexOf(item.yPos) > -1)
-      .filter(item => [tile.tile.xPos - 2, tile.tile.xPos - 1, tile.tile.xPos, tile.tile.xPos + 1, tile.tile.xPos + 2].indexOf(item.xPos) > -1);
+      .filter(item => item.match == undefined && item._id !== tile._id)
+      .filter(item => [tile.zPos, tile.zPos + 1].indexOf(item.zPos) > -1)
+      .filter(item => [tile.yPos - 1, tile.yPos, tile.yPos + 1].indexOf(item.yPos) > -1)
+      .filter(item => [tile.xPos - 2, tile.xPos - 1, tile.xPos, tile.xPos + 1, tile.xPos + 2].indexOf(item.xPos) > -1);
 
     tiles.forEach(item => {
-      if (item.zPos === tile.tile.zPos) {
-        if (item.xPos === tile.tile.xPos + 2) {
+      if (item.zPos === tile.zPos) {
+        if (item.xPos === tile.xPos + 2) {
           hasRight = true;
-        } else if (item.xPos === tile.tile.xPos - 2) {
+        } else if (item.xPos === tile.xPos - 2) {
           hasLeft = true;
         }
 
@@ -91,9 +91,9 @@ export class GameBoardComponent {
           can = false;
           return false;
         }
-      } else if (item.zPos === tile.tile.zPos + 1) {
-        if ([tile.tile.yPos - 1, tile.tile.yPos, tile.tile.yPos + 1].indexOf(item.yPos) > -1 &&
-          [tile.tile.xPos - 1, tile.tile.xPos, tile.tile.xPos + 1].indexOf(item.xPos) > -1) {
+      } else if (item.zPos === tile.zPos + 1) {
+        if ([tile.yPos - 1, tile.yPos, tile.yPos + 1].indexOf(item.yPos) > -1 &&
+          [tile.xPos - 1, tile.xPos, tile.xPos + 1].indexOf(item.xPos) > -1) {
           can = false;
           return false;
         }
@@ -104,7 +104,17 @@ export class GameBoardComponent {
   }
 
   private hint() {
+    const tiles = this.tiles.filter(tile => tile.match == undefined && this.can(tile));
+    const possibilities: Tile[] = [];
 
+    tiles.forEach(item => {
+      const i = tiles.find(tile => tile.tile._id !== item.tile._id && this.MatchMaker(tile, item));
+      if (!!i) {
+        possibilities.push(item);
+      }
+    });
+
+    return possibilities[Math.floor(Math.random() * possibilities.length + 1)];
   }
 
 }

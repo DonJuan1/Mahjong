@@ -56,9 +56,6 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
     this.socket.on('end', () => this.gameEnded(this.game));
   }
 
-  /////////////////
-  // Socket methods
-
   playerJoined(data) {
     this.game.players.push(data);
   }
@@ -91,12 +88,6 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
     this.canPlay = false;
   }
 
-  hint() {
-
-  }
-
-  /////////////////
-  // Event Handlers
 
   onMatched(tiles: Tile[]) {
     this.api.matchTiles(this.game._id, tiles[0]._id, tiles[1]._id).subscribe(message => {
