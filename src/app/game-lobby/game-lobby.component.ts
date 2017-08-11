@@ -19,8 +19,7 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
 
   game: Game;
 
-  constructor(private api: ApiService, private route: ActivatedRoute, vcr: ViewContainerRef) {
-
+  constructor(private api: ApiService, private route: ActivatedRoute) {
   }
 
   get canShowHistory() {
@@ -78,6 +77,7 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
   }
 
   gameEnded(game: Game) {
+    console.log("finished");
     game.state = 'finished';
 
     if (game.tiles == null) {
@@ -99,11 +99,14 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
     if (users.length === 0) {
       return this.game.tiles.forEach(tile => tile.forceShown = null);
     }
+    console.log("usersChecked");
 
     this.game.tiles.forEach(tile => {
-      tile.forceShown = tile.match && users.map(user => user._id).indexOf(tile.match.foundBy) > -1;
+      tile.forceShown = tile.match != null && users.map(user => user._id).indexOf(tile.match.foundBy) > -1;
     });
   }
+
+
 
   showError(message: string) {
     //this.toastr.error(message);

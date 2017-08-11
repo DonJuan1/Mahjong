@@ -50,13 +50,15 @@ describe('GameBoardTileComponent', () => {
             matchesWholeSuit: false
         },
           match: {
-            foundBy: 'Jonathan',
-            otherTileId: '5',
+            foundBy: null,
+            otherTileId: null,
             foundOn: null
         },
           forceShown: null,
-          shownAtTime: null
+          shownAtTime: null,
+          isHinted: null 
         }
+        
     
     expect(component.getStyle()).toBeDefined();
   });

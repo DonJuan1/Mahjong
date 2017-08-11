@@ -1,1 +1,4 @@
-<div class="tile {{background}}" [class.selected]="isSelected" [@enterAnimation] [ngStyle]="getStyle()" (click)="canSelect()"></div>
+
+<div *ngIf="tile" class="tile {{background}}" [@enterAnimation] [ngStyle]="getStyle()" (click)="canSelect()">
+    <div class="tileOverlay" [class.hinted]="tile.isHinted" [class.selected]="isSelected"></div>
+</div>

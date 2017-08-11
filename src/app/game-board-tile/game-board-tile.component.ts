@@ -34,21 +34,21 @@ export class GameBoardTileComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if (this.tile != undefined && this.tile.tile != null) {
+    if (this.tile != null && this.tile.tile != null) {
       this.background = `${this.tile.tile.suit}-${this.tile.tile.name}`.toLowerCase();
     }
 
-    //this.randomNumber = Math.floor(Math.random() * 2) + Math.floor(Math.random() * -2)
-    this.randomNumber = 0
+    this.randomNumber = Math.floor(Math.random() * 2) + Math.floor(Math.random() * -2)
   }
 
   getStyle(): any {
-    if (this.tile != undefined) {
+    if (this.tile != null) {
       return {
         'left': ((this.tile.xPos) * 18) + (4 * this.tile.zPos) + this.randomNumber + 'px',
         'top': ((this.tile.yPos) * 26 - (5 * this.tile.zPos)) + this.randomNumber + 'px',
         'z-index': ((this.tile.zPos * 100) - this.tile.xPos + this.tile.yPos) + 1000,
         'transform': `rotate(${this.randomNumber}deg)`,
+        'display': `${this.visibility}`,
       }
     }
   }
@@ -61,11 +61,20 @@ export class GameBoardTileComponent implements OnInit {
     this.clicked.emit(this);
   }
 
-  get visable() {
-    if (this.tile.match == undefined) {
-      return 'block'
-    } else {
-      return 'none'
+  get visibility() {
+    if (this.tile.shownAtTime != null) {
+      const force = this.tile.forceShown === null ? true : !!this.tile.forceShown;
+
+      if (this.tile.match != null) {
+        return force && new Date(this.tile.match.foundOn) > new Date(this.tile.shownAtTime) ? 'block' : 'none';
+      }
     }
+
+    if (this.tile.forceShown != null) {
+      return this.tile.forceShown ? 'block' : 'none';
+    }
+
+    return this.tile.match != null ? 'none' : 'block';
   }
 }
+

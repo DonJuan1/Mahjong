@@ -12,6 +12,7 @@ export class GameBoardComponent {
 
   private _tiles: Tile[]
   private clickedTile: GameBoardTileComponent;
+  private hintedTiles: [Tile, Tile];
 
   @Input() set tiles(value: Tile[]) {
     this._tiles = value;
@@ -34,14 +35,20 @@ export class GameBoardComponent {
   }
 
   canSelect(component: GameBoardTileComponent) {
+    if (this.hintedTiles != null) {
+      this.hintedTiles[0].isHinted = false;
+      this.hintedTiles[1].isHinted = false;
+      this.hintedTiles = null;
+    }
+
     var clickable = this.can(component.tile)
     if (clickable) {
-      if (this.clickedTile == undefined) {
+      if (this.clickedTile == null) {
         this.clickedTile = component;
         this.clickedTile.isSelected = true;
       } else {
         if (this.clickedTile != component) {
-          var isMatch = this.MatchMaker(this.clickedTile, component);
+          var isMatch = this.MatchMaker(this.clickedTile.tile, component.tile);
         }
 
         if (isMatch) {
@@ -50,7 +57,7 @@ export class GameBoardComponent {
         }
 
         this.clickedTile.isSelected = false;
-        this.clickedTile = undefined;
+        this.clickedTile = null;
       }
     }
   }
@@ -61,11 +68,12 @@ export class GameBoardComponent {
     setTimeout(() => { this.drawTile(index + 1) });
   }
 
-   MatchMaker(selectedTile, compareTile): boolean {
-    return selectedTile.tile.tile.name == compareTile.tile.tile.name &&
-      (selectedTile.tile.tile.suit == compareTile.tile.tile.suit || (selectedTile.tile.tile.matchesWholeSuit))
-  }
+    MatchMaker(selectedTile: Tile, compareTile: Tile): boolean {
+    let match = selectedTile.tile.suit === compareTile.tile.suit &&
+      (selectedTile.tile.matchesWholeSuit ? true : selectedTile.tile.name === compareTile.tile.name);
 
+    return match;
+  }
 
    can(tile: Tile): boolean {
     let can = true;
@@ -103,20 +111,34 @@ export class GameBoardComponent {
     return can;
   }
 
-  private hint() {
-    const tiles = this.tiles.filter(tile => tile.match == undefined && this.can(tile));
-    const possibilities: Tile[] = [];
+  hint() {
+    if (this.hintedTiles != null) {
+      this.hintedTiles[0].isHinted = false;
+      this.hintedTiles[1].isHinted = false;
+    }
+
+    if (this.clickedTile != null) {
+      this.clickedTile.isSelected = false;
+      this.clickedTile = null;
+    }
+
+    const tiles = this._tiles.filter(tile => tile.match == undefined && this.can(tile));
+    const possibilities: [Tile, Tile][] = []
 
     tiles.forEach(item => {
-      const i = tiles.find(tile => tile.tile._id !== item.tile._id && this.MatchMaker(tile, item));
-      if (!!i) {
-        possibilities.push(item);
+      const tile = tiles.find(tile => tile.tile._id !== item.tile._id && this.MatchMaker(tile, item));
+      if (!!tile) {
+        possibilities.push([tile, item]);
       }
     });
 
-    return possibilities[Math.floor(Math.random() * possibilities.length + 1)];
+    if (possibilities.length > 0) {
+      const randomMatch = Math.floor(Math.random() * possibilities.length);
+      this.hintedTiles = possibilities[randomMatch];
+      this.hintedTiles[0].isHinted = true;
+      this.hintedTiles[1].isHinted = true;
+    }
   }
-
 }
 
 

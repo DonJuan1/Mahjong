@@ -1,3 +1,4 @@
+import { UserListComponent } from './../user-list/user-list.component';
 import { ApiServiceMock } from './../Mock/ApiServiceMock';
 import { ApiService } from './../api.service';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -25,7 +26,8 @@ describe('GameLobbyComponent', () => {
         NavbarComponent,
         GameBoardComponent,
         GameLobbyButtonComponent,
-        GameBoardTileComponent
+        GameBoardTileComponent,
+        UserListComponent
       ],
       imports: [RouterTestingModule, FormsModule],
       providers: [
