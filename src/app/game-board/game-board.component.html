@@ -1,3 +1,5 @@
 <div class="gameboard">
   <GameBoardTileComponent *ngFor="let t of tilesToDraw" [tile]="t" [clickable]="!viewOnly" (clicked)="canSelect($event)"></GameBoardTileComponent>
 </div>
+
+<button *ngIf="!viewOnly" class="btn btn-primary pull-right" (click)="hint()">Give me a hint</button>

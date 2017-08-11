@@ -23,7 +23,11 @@
   </div>
 
   <div class="row">
-    <div class="col-md-2 pull-left button-container" *ngIf="game.state === 'open'">
+    <div class="col-md-10">
+      <app-user-list [players]="game.players" [canCheck]="canShowHistory" (checked)="usersChecked($event)">
+      </app-user-list>
+    </div>
+    <div class="col-md-2 pull-right button-container" *ngIf="game.state === 'open'">
       <app-game-lobby-button [game]="game" (error)="showError($event)"></app-game-lobby-button>
     </div>
   </div>

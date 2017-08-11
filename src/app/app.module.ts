@@ -19,6 +19,7 @@ import { GameLobbyComponent } from './game-lobby/game-lobby.component';
 import { GameBoardComponent } from './game-board/game-board.component';
 import { GameBoardTileComponent } from './game-board-tile/game-board-tile.component';
 import { GameLobbyButtonComponent } from './game-lobby-button/game-lobby-button.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { GameLobbyButtonComponent } from './game-lobby-button/game-lobby-button.
     GameBoardComponent,
     GameBoardTileComponent,
     GameLobbyButtonComponent,
+    UserListComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,7 @@ import { GameLobbyButtonComponent } from './game-lobby-button/game-lobby-button.
     LoginModule,
     HttpModule,
     Routing,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [AuthGuard, ApiService],
   bootstrap: [AppComponent]

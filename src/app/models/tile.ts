@@ -17,4 +17,5 @@ export class Tile {
 
   forceShown = null;
   shownAtTime = null;
+  isHinted = null;
 }
