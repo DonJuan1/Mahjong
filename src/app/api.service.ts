@@ -5,7 +5,7 @@ import { Game } from './models/game';
 import { GameState } from './models/gamestate';
 import { GameTemplate } from './models/game-template';
 import { Tile } from './models/tile';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
