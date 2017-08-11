@@ -19,7 +19,8 @@ describe('GameListComponent', () => {
         NavbarComponent,
         GameFilterComponent
       ],
-      imports: [RouterTestingModule, FormsModule]
+      imports: [RouterTestingModule, FormsModule],
+      
     }).overrideComponent(GameListComponent, {
       set: {
         providers: [{ provide: ApiService, useClass: ApiServiceMock }]

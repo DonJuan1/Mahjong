@@ -48,4 +48,7 @@ describe('GameLobbyComponent', () => {
   it('should be created', () => {
     expect(component).toBeTruthy();
   });
+  it('should show history', () => {
+    expect(component.canShowHistory).toBe(true);
+  })
 });

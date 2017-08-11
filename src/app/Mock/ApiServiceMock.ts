@@ -145,7 +145,7 @@ export class ApiServiceMock {
     public createGames(): Game[] {
         var dummy = new Game();
         var dummy2 = new Game();
-        dummy._id = '1';
+        dummy._id = '2';
         dummy.createdBy = {
             _id: '0',
             name: 'Jonathan',
@@ -167,7 +167,7 @@ export class ApiServiceMock {
                 numberOfMatches: 0
             }
         ]
-        dummy2._id = '2'
+        dummy2._id = '1'
         dummy2.createdBy = {
             _id: '1',
             name: 'Jasper',

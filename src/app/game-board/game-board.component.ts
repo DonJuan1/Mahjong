@@ -61,13 +61,13 @@ export class GameBoardComponent {
     setTimeout(() => { this.drawTile(index + 1) });
   }
 
-  private MatchMaker(selectedTile, compareTile): boolean {
+   MatchMaker(selectedTile, compareTile): boolean {
     return selectedTile.tile.tile.name == compareTile.tile.tile.name &&
       (selectedTile.tile.tile.suit == compareTile.tile.tile.suit || (selectedTile.tile.tile.matchesWholeSuit))
   }
 
 
-  private can(tile: Tile): boolean {
+   can(tile: Tile): boolean {
     let can = true;
 
     let hasRight = false;
