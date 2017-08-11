@@ -2,6 +2,6 @@
 <ul *ngFor="let player of players">
   <li [class.checkable]="canCheck">
     <input id="{{ player._id }}" type="checkbox" (change)="userChecked(player)" [class.hidden]="!canCheck">
-    <label for="{{ player._id }}">{{ player._id }}</label>
+    <label for="{{ player._id }}">{{ player._id + player.numberOfMatches}}</label>
   </li>
 </ul>

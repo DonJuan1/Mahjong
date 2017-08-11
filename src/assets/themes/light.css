@@ -5985,12 +5985,17 @@ button.close {
 .filterContainer {
   margin: 20px 0; }
 
+.wood-background {
+  background-image: url("../img/woodbackground.jpg");
+  background-repeat: repeat;
+  height: calc(100vh - 50px); }
+
 .game-box {
   margin: 40px 0;
   text-align: center; }
 
 p {
-  margin: 20px auto 0 !important; }
+  margin-bottom: 20px auto 0 !important; }
 
 h2 {
   text-align: center; }
@@ -6011,8 +6016,8 @@ h2 {
     background: rgba(0, 0, 0, 0.1);
     z-index: 1000; }
 
-.container {
-  margin-top: 80px; }
+.panle {
+  margin-top: 40px; }
 
 .login {
   width: 100%;
