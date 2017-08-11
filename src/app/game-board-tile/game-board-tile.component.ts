@@ -10,10 +10,6 @@ import { Tile } from '../models/tile';
           style({ transform: 'translateY(-700%)', opacity: 0.2 }),
           animate('200ms', style({ transform: 'translateY(0)', opacity: 1 }))
         ]),
-        transition(':leave', [
-          style({ transform: 'translateY(0)', opacity: 1 }),
-          animate('200ms', style({ transform: 'translateY(-100%)', opacity: 0 }))
-        ])
       ]
     )
   ],
@@ -38,7 +34,13 @@ export class GameBoardTileComponent implements OnInit {
       this.background = `${this.tile.tile.suit}-${this.tile.tile.name}`.toLowerCase();
     }
 
-    this.randomNumber = Math.floor(Math.random() * 2) + Math.floor(Math.random() * -2)
+    this.randomNumber = Math.floor(Math.random() * 4) + Math.floor(Math.random() * -4)
+
+    var audio = new Audio();
+    audio.src = "assets/sounds/tile_down1.mp3";
+    audio.volume = Math.random() / 4;
+    audio.load();
+    audio.play();
   }
 
   getStyle(): any {
