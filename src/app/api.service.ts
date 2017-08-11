@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ApiService {
 
-    host = 'http://mahjongmayhem.herokuapp.com';
+    host = 'https://mahjongmayhem.herokuapp.com';
 
     constructor( @Inject(DOCUMENT) private document: any, private http: Http) {
     }
