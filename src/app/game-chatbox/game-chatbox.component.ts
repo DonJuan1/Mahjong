@@ -57,7 +57,7 @@ export class GameChatboxComponent implements OnInit {
   }
 
   private openSocket() {
-    this.chatSocket = io(`https://mehjong.herokuapp.com/?gameId=${this._game._id}`);
+    this.chatSocket = io(`https://mehjong.herokuapp.com?gameId=${this._game._id}`);
     this.chatSocket.on('new message', data => this.newMessage(data));
   }
 
