@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="wood-background">
+<div class="">
   <div class="container" *ngIf="game !== undefined">
     <div class="row">
       <div class="col-md-12">
@@ -34,3 +34,5 @@
     </div>
   </div>
 </div>
+
+<app-game-chatbox [game]="game"></app-game-chatbox>

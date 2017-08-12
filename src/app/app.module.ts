@@ -20,6 +20,7 @@ import { GameBoardComponent } from './game-board/game-board.component';
 import { GameBoardTileComponent } from './game-board-tile/game-board-tile.component';
 import { GameLobbyButtonComponent } from './game-lobby-button/game-lobby-button.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { GameChatboxComponent } from './game-chatbox/game-chatbox.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { UserListComponent } from './user-list/user-list.component';
     GameBoardTileComponent,
     GameLobbyButtonComponent,
     UserListComponent,
+    GameChatboxComponent,
   ],
   imports: [
     BrowserModule,
