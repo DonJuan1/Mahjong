@@ -2,7 +2,7 @@
   <button class="chat-hider" (click)="moveChatbox()">{{chatboxText}}</button>
   <div #scrollMe class="chatlogs">
     <div *ngFor="let message of messageData" class="chat">
-      <p class="chat-username">{{message.username}}</p>
+      <p class="chat-username">{{message.username | emailPipe}}</p>
       <p class="chat-message">{{message.msg}}</p>
     </div>
   </div>

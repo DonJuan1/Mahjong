@@ -27,12 +27,13 @@ h2{
   background: rgba(0, 0, 0, 0.5);
 
   p {
+    color: white;
     position: absolute;
-    top: 100px;
-    left: calc(50% - 118px);
-    padding: 20px 50px;
-    border-radius: 50px;
-    background: rgba(0, 0, 0, .1);
+    top: 150px;
+    left: calc(50% - 200px);
+    padding: 75px 150px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, .8);
     z-index: 1000;
   }
 }

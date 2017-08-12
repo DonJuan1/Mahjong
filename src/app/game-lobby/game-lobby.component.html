@@ -22,6 +22,9 @@
         </div>
       </div>
     </div>
+    <div *ngIf="canShowHistory">
+      <app-game-timeline [tiles]="game.tiles"></app-game-timeline>
+    </div>
 
     <div class="row">
       <div class="col-md-10">

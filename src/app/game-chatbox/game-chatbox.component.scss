@@ -2,8 +2,7 @@
     position: fixed;
     bottom: 0px;
     left: 0px; 
-    width: 250px;
-    height: 425px;
+    @include width-height(250px, 425px);
     background: lightblue;
 }
 
@@ -11,14 +10,12 @@
     position: fixed;
     bottom: 0px;
     left: 0px; 
-    width: 250px;
-    height: 25px;
+    @include width-height(250px, 25px);
     background: lightblue;
 }
 
 .chat-hider{
-    width: 100%;
-    height: 25px;
+    @include width-height(100%, 25px);
     background: gray;
     padding: 0px 15px;
     font-size: 16px;
@@ -29,8 +26,7 @@
 
 .chatlogs{
     padding: 10px;
-    width: 100%;
-    height: 350px;
+    @include width-height(100%, 350px);
     background: lightgray;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -69,8 +65,7 @@
 
 .chat-form textarea{
     background: #eee;
-    width: 75%;
-    height: 30px;
+    @include width-height(75%, 30px);
     resize: none;
     font-size: 14px;
     color: #333;
