@@ -12,10 +12,10 @@ export class GameChatboxComponent implements OnInit {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
   private chatSocket;
-  private _game: Game;
-  private isOpen: boolean;
-  private chatboxText: string;
 
+  isOpen: boolean;
+  chatboxText: string;
+  _game: Game;
   messageData: any[];
 
   @Input() set game(value: Game) {
