@@ -8,10 +8,10 @@ import { Tile } from '../models/tile';
 })
 export class GameTimelineComponent implements OnChanges {
 
-  private currentTime = 0;
+  currentTime = 0;
 
-  private first = new Date(0);
-  private last = new Date(0);
+  first = new Date(0);
+  last = new Date(0);
 
   @Input() tiles: Tile[];
 
