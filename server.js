@@ -1,22 +1,16 @@
 // server.js
 var express = require('express');
-var app = express();
 var path = require('path');
-var port = process.env.PORT || 3000;
-var server = app.listen(port);
+var port = process.env.PORT || 8080;
 
-app.use(express.static(__dirname + '/dist'));
+const server = express()
+    .use(express.static(__dirname + '/dist'))
+    .get('/*', (req, res) => res.sendFile(path.join(__dirname + '/dist/index.html')))
+    .listen(port, () => console.log(`Listening on ${port}`));
 
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/dist/index.html'));
-});
+var io = require('socket.io')(server);
 
-var socket = require('socket.io');
-var io = socket(server);
-io.set('transports', ['xhr-polling']);
-io.set('polling duration', 10);
-
-io.sockets.on("connection", (socket) => {
+io.on("connection", (socket) => {
     var gameId = socket.handshake.query.gameId
     if (gameId == null) {
         socket.disconnect();
