@@ -57,7 +57,7 @@ export class GameChatboxComponent implements OnInit {
   }
 
   private openSocket() {
-    this.chatSocket = io();
+    this.chatSocket = io(`?gameId=${this._game._id}`);
     this.chatSocket.on('new message', data => this.newMessage(data));
   }
 
