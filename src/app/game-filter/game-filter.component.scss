@@ -1,3 +1,8 @@
 .filterContainer{
     margin: 20px 0;
 }
+
+.panel-default > .panel-heading {
+    color: set-text-color($main-color);
+    background-color: $main-color;
+}

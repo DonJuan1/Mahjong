@@ -1,0 +1,25 @@
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius; 
+    border-radius: $radius;
+}
+
+@mixin width-height($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin drop-shadow($h-shadow,$v-shadow,$blur,$color){
+    -moz-filter: drop-shadow($h-shadow $v-shadow $blur $color);
+    -ms-filter: drop-shadow($h-shadow $v-shadow $blur $color);
+    -webkit-filter: drop-shadow($h-shadow $v-shadow $blur $color);
+    filter: drop-shadow($h-shadow $v-shadow $blur $color);
+}
+
+@mixin backface-visibility($visibility){
+    -moz-backface-visibility: $visibility;
+    -ms--backface-visibility: $visibility;
+    -webkit-backface-visibility: $visibility;
+    backface-visibility: $visibility;
+}

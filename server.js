@@ -1,15 +1,25 @@
 // server.js
-const express = require('express');
-const app = express();
-const path = require('path');
+var express = require('express');
+var path = require('path');
+var port = process.env.PORT || 8080;
 
-// Run the app by serving the static files
-// in the dist directory
-app.use(express.static(__dirname + '/dist'));
-// Start the app by listening on the default
-// Heroku port
-app.listen(process.env.PORT || 8080);
+const server = express()
+    .use(express.static(__dirname + '/dist'))
+    .get('/*', (req, res) => res.sendFile(path.join(__dirname + '/dist/index.html')))
+    .listen(port, () => console.log(`Listening on ${port}`));
 
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname + '/dist/index.html'));
+var io = require('socket.io')(server);
+
+io.on("connection", (socket) => {
+    var gameId = socket.handshake.query.gameId
+    if (gameId == null) {
+        socket.disconnect();
+    } else {
+        socket.join(gameId);
+    }
+    socket.on("send message", (data) => {
+        if (data.gameId != null) {
+            io.to(data.gameId).emit('new message', { username: data.username, msg: data.msg });
+        }
+    });
 });

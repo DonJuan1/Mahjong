@@ -1,0 +1,14 @@
+<div *ngIf="_game" [class.chatbox]="isOpen" [class.chatbox-closed]="!isOpen">
+  <button class="chat-hider" (click)="moveChatbox()">{{chatboxText}}</button>
+  <div #scrollMe class="chatlogs">
+    <div *ngFor="let message of messageData" class="chat">
+      <p class="chat-username">{{message.username | emailPipe}}</p>
+      <p class="chat-message">{{message.msg}}</p>
+    </div>
+  </div>
+
+  <div class="chat-form">
+    <textarea #textarea></textarea>
+    <button (click)="sendMessage(textarea.value); textarea.value=''">Send</button>
+  </div>
+</div>

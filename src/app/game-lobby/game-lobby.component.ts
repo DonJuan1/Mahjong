@@ -60,6 +60,13 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
   }
 
   matchFound(data) {
+    const player = this.game.players.find(player => player._id === data[0].match.foundBy);
+    if (player.numberOfMatches == null) {
+      player.numberOfMatches = 0;
+    }
+
+    player.numberOfMatches += 1;
+
     data.forEach(tile => {
       const found = this.game.tiles.find(_tile => _tile._id === tile._id);
       found.match = tile.match;

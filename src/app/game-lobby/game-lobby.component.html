@@ -1,34 +1,41 @@
 <app-navbar></app-navbar>
 
-<div class="container" *ngIf="game !== undefined">
-  <div class="row">
-    <div class="col-md-12">
-      <h2>{{ game.gameTemplate.id }} Game Created by {{ game.createdBy.name }}</h2>
+<div class="">
+  <div class="container" *ngIf="game !== undefined">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>{{ game.gameTemplate.id }} Game Created by {{ game.createdBy.name }}</h2>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="game-box">
-        <div *ngIf="game.state === 'open'">
-          <p>Waiting for {{ game.createdBy.name }} to start the game...</p>
-        </div>
-        <div *ngIf="game.state === 'finished'" class="dark-background">
-          <p>This game has ended.</p>
-        </div>
-        <div *ngIf="game.state !== 'open'">
-          <app-game-board [viewOnly]="!canPlay" [tiles]="game.tiles" (tilesMatched)="onMatched($event)" (error)="showError($event)"></app-game-board>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="game-box">
+          <div *ngIf="game.state === 'open'">
+            <p>Waiting for {{ game.createdBy.name }} to start the game...</p>
+          </div>
+          <div *ngIf="game.state === 'finished'" class="dark-background">
+            <p>This game has ended.</p>
+          </div>
+          <div *ngIf="game.state !== 'open'">
+            <app-game-board [viewOnly]="!canPlay" [tiles]="game.tiles" (tilesMatched)="onMatched($event)" (error)="showError($event)"></app-game-board>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-10">
-      <app-user-list [players]="game.players" [canCheck]="canShowHistory" (checked)="usersChecked($event)">
-      </app-user-list>
+    <div *ngIf="canShowHistory">
+      <app-game-timeline [tiles]="game.tiles"></app-game-timeline>
     </div>
-    <div class="col-md-2 pull-right button-container" *ngIf="game.state === 'open'">
-      <app-game-lobby-button [game]="game" (error)="showError($event)"></app-game-lobby-button>
+
+    <div class="row">
+      <div class="col-md-10">
+        <app-user-list [players]="game.players" [canCheck]="canShowHistory" (checked)="usersChecked($event)">
+        </app-user-list>
+      </div>
+      <div class="col-md-2 pull-right button-container" *ngIf="game.state === 'open'">
+        <app-game-lobby-button [game]="game" (error)="showError($event)"></app-game-lobby-button>
+      </div>
     </div>
   </div>
 </div>
+
+<app-game-chatbox [game]="game"></app-game-chatbox>
