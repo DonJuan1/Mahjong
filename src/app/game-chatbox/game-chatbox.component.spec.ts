@@ -1,3 +1,6 @@
+import { EmailPipe } from './../pipes/email-pipe.pipe';
+import { ApiServiceMock } from './../Mock/ApiServiceMock';
+import { ApiService } from './../api.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameChatboxComponent } from './game-chatbox.component';
@@ -8,9 +11,12 @@ describe('GameChatboxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameChatboxComponent ]
-    })
-    .compileComponents();
+      declarations: [ GameChatboxComponent, EmailPipe ]
+    }).overrideComponent(GameChatboxComponent, {
+      set: {
+        providers: [{ provide: ApiService, useClass: ApiServiceMock }]
+      }
+    }).compileComponents();
   }));
 
   beforeEach(() => {

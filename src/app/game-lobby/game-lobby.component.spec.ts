@@ -1,3 +1,7 @@
+import { LoginModule } from './../modules/login.module';
+import { EmailPipe } from './../pipes/email-pipe.pipe';
+import { GameChatboxComponent } from './../game-chatbox/game-chatbox.component';
+import { GameTimelineComponent } from './../game-timeline/game-timeline.component';
 import { UserListComponent } from './../user-list/user-list.component';
 import { ApiServiceMock } from './../Mock/ApiServiceMock';
 import { ApiService } from './../api.service';
@@ -27,7 +31,10 @@ describe('GameLobbyComponent', () => {
         GameBoardComponent,
         GameLobbyButtonComponent,
         GameBoardTileComponent,
-        UserListComponent
+        UserListComponent,
+        GameTimelineComponent,
+        GameChatboxComponent,
+        EmailPipe
       ],
       imports: [RouterTestingModule, FormsModule],
       providers: [

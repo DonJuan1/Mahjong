@@ -1,3 +1,6 @@
+import { FormsModule } from '@angular/forms';
+import { ApiServiceMock } from './../Mock/ApiServiceMock';
+import { ApiService } from './../api.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameTimelineComponent } from './game-timeline.component';
@@ -8,9 +11,15 @@ describe('GameTimelineComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameTimelineComponent ]
-    })
-    .compileComponents();
+      declarations: [ GameTimelineComponent,
+      
+      ],
+      imports: [FormsModule]
+    }).overrideComponent(GameTimelineComponent, {
+      set: {
+        providers: [{ provide: ApiService, useClass: ApiServiceMock }]
+      }
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -11,6 +11,7 @@ import { GameBoardTileComponent } from '../game-board-tile/game-board-tile.compo
 describe('GameBoardComponent', () => {
   let component: GameBoardComponent;
   let fixture: ComponentFixture<GameBoardComponent>;
+  let api: ApiServiceMock;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,6 +20,7 @@ describe('GameBoardComponent', () => {
         GameBoardTileComponent
       ],
       imports: [RouterTestingModule],
+      providers: [ApiServiceMock]
     }).overrideComponent(GameBoardComponent, {
       set: {
         providers: [{ provide: ApiService, useClass: ApiServiceMock }]
@@ -30,6 +32,8 @@ describe('GameBoardComponent', () => {
     fixture = TestBed.createComponent(GameBoardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    api = TestBed.get(ApiServiceMock);
+    component._tiles = api.getTiles();
   });
 
   it('should be created', () => {
@@ -37,10 +41,18 @@ describe('GameBoardComponent', () => {
   });
   
   it('should make tile clickable', () => {
-     expect(component.can).toBe(true);
 
+     expect(component.can(component._tiles[0])).toBe(true);
+    //TODO
   });
     it('should match the tiles', () => {
-      expect(component.MatchMaker).toBe(true);
+      expect(component.MatchMaker(component._tiles[0], component._tiles[1])).toBe(true);
+      //TODO
     });
+    it('should show a hinted tile', () =>{
+      component.hint();
+      expect(component.hintedTiles[0].isHinted).toBe(true);
+    })
+
+    
 });

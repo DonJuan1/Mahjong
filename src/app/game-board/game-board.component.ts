@@ -10,9 +10,9 @@ import { ApiService } from "../api.service";
 })
 export class GameBoardComponent {
 
-  private _tiles: Tile[]
+   _tiles: Tile[]
   private clickedTile: GameBoardTileComponent;
-  private hintedTiles: [Tile, Tile];
+  hintedTiles: [Tile, Tile];
 
   @Input() set tiles(value: Tile[]) {
     this._tiles = value;
