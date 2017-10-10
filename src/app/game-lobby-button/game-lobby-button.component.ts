@@ -11,13 +11,14 @@ export class GameLobbyButtonComponent {
 
   @Input() game: Game;
 
-  @Output() error: EventEmitter<string> = new EventEmitter();
-
   constructor(private api: ApiService) {
   }
 
+  //Get the button text according to the game state
   get buttonText() {
+    //Check if the user is in game
     if (!this.inGame()) {
+      //Check if there is room to join the game
       if (this.game.maxPlayers <= this.game.players.length) {
         return null;
       }
@@ -25,6 +26,7 @@ export class GameLobbyButtonComponent {
       return 'Join Game!';
     }
 
+    //Check if the user is owner of the game
     if (!this.ownerOfGame()) {
       return 'Leave Game!';
     }
@@ -33,7 +35,9 @@ export class GameLobbyButtonComponent {
   }
 
   doAction() {
+    //Check if the user is in game
     if (!this.inGame()) {
+      //Check if there is room to join the game
       if (this.game.maxPlayers <= this.game.players.length) {
         return;
       }
@@ -41,6 +45,7 @@ export class GameLobbyButtonComponent {
       return this.joinGame();
     }
 
+    //Check if the user is owner of the game
     if (!this.ownerOfGame()) {
       return this.leaveGame();
     }
@@ -48,29 +53,31 @@ export class GameLobbyButtonComponent {
     return this.startGame();
   }
 
+  //Check if the user has joined the game
   private inGame(): boolean {
     return this.game.players.map(item => item._id).indexOf(this.api.email) > -1;
   }
 
+  //Check if the user is owner of the game
   private ownerOfGame() {
     return this.game.createdBy._id === this.api.email;
   }
 
+  //Leave the game (This is not implemented in the server)
   private leaveGame() {
     this.api.leaveGame(this.game).subscribe(bool => {
-      console.log(bool);
     });
   }
 
+  //Join the current game
   private joinGame() {
     this.api.joinGame(this.game).subscribe(bool => {
-      console.log(bool);
     });
   }
 
+  //Start the current game
   private startGame() {
     this.api.startGame(this.game).subscribe(message => {
-      console.log(message);
     });
   }
 

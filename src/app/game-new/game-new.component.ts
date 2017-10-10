@@ -25,22 +25,26 @@ export class GameNewComponent implements OnInit {
   ngOnInit(): void {
     this.newGame();
 
+    //Get templates from the server
     this.api.getTemplates().subscribe(templates => {
       this.gameTemplates = templates;
       this.newGame();
     });
   }
 
+  //Submit the new game
   onSubmit() {
     this.api.createGame(this.model.gameTemplate.id, this.model.minPlayers, this.model.maxPlayers)
       .subscribe(() => this.router.navigate(['games']));
   }
 
+  //Change the template of the new game
   onChange(newValue: any) {
     const template = this.gameTemplates.find(item => item.id === newValue);
     this.tiles = template.tiles;
   }
 
+  //Init new game
   newGame(): boolean {
     this.tiles = null;
 

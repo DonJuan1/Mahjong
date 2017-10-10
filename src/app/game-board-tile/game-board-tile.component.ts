@@ -21,6 +21,7 @@ export class GameBoardTileComponent implements OnInit {
   @Input() tile: Tile;
   @Input() clickable: boolean;
 
+  //Event fires when the tile is clicked
   @Output() clicked: EventEmitter<GameBoardTileComponent> = new EventEmitter();
 
   background: string;
@@ -30,12 +31,15 @@ export class GameBoardTileComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    //Is there a tile available
     if (this.tile != null && this.tile.tile != null) {
       this.background = `${this.tile.tile.suit}-${this.tile.tile.name}`.toLowerCase();
     }
 
+    //Random number for rotation of the tile
     this.randomNumber = Math.floor(Math.random() * 4) + Math.floor(Math.random() * -4)
 
+    //Play audio sound when a tile spawned
     var audio = new Audio();
     audio.src = "assets/sounds/tile_down1.mp3";
     audio.volume = Math.random() / 4;
@@ -43,6 +47,7 @@ export class GameBoardTileComponent implements OnInit {
     audio.play();
   }
 
+  //Get the style off the tile
   getStyle(): any {
     if (this.tile != null) {
       return {
@@ -56,6 +61,7 @@ export class GameBoardTileComponent implements OnInit {
   }
 
   canSelect() {
+    //Is the tile selected
     if (!this.clickable) {
       return;
     }
@@ -63,7 +69,9 @@ export class GameBoardTileComponent implements OnInit {
     this.clicked.emit(this);
   }
 
+  //Get the visibility of the tile
   get visibility() {
+    //Is the tile shown at a time (timeline)
     if (this.tile.shownAtTime != null) {
       const force = this.tile.forceShown === null ? true : !!this.tile.forceShown;
 
@@ -72,6 +80,7 @@ export class GameBoardTileComponent implements OnInit {
       }
     }
 
+    //Is the tile forced shown (view matched tile by player)
     if (this.tile.forceShown != null) {
       return this.tile.forceShown ? 'block' : 'none';
     }

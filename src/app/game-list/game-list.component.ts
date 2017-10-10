@@ -17,9 +17,11 @@ export class GameListComponent implements OnInit {
   }
 
   ngOnInit() {
+    //Get the url parameters
     this.route.params.subscribe((params: Params) => {
       this.state = params['state'];
 
+      //Check if the parameter is valid
       if (this.state != "all" && this.state != "open" && this.state != "playing" && this.state != "finished") {
         this.router.navigate(['gamelist']);
       } else {
@@ -30,14 +32,17 @@ export class GameListComponent implements OnInit {
 
   }
 
+  //Update the games list according to the filters
   updateGames(filters: any) {
     this.getGames(this.state, filters.createdByMe, filters.joinedByMe);
   }
 
+  //Navigate to a game
   lobby(game: Game) {
     this.router.navigate([`games/game/${game._id}`]);
   }
 
+  //Get all the games
   private getGames(state, createdByMe, joinedByMe) {
     this.api.getGames(this.state, createdByMe, joinedByMe).subscribe(games => {
       this.games = games;
