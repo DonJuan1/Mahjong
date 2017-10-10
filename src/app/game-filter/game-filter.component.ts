@@ -8,6 +8,7 @@ import { ApiService } from '../api.service';
 })
 export class GameFilterComponent implements OnInit {
 
+  //Event fired when a filter is changed
   @Output() filtered: EventEmitter<any> = new EventEmitter();
 
   createdByMe: boolean;
@@ -20,6 +21,7 @@ export class GameFilterComponent implements OnInit {
     this.joinedByMe = false
   }
 
+  //Change state of the filter and emit the filtered event
   toggle() {
     let filters = {
       createdByMe: this.createdByMe,

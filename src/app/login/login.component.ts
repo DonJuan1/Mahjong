@@ -11,11 +11,13 @@ export class LoginComponent implements OnInit {
   constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit() {
+    //Is the user already logged in
     if (this.api.isLoggedIn) {
       this.router.navigate(['games']);
     }
   }
 
+  //Go to the avans login page
   public login() {
     location.href = this.api.loginUrl;
   }

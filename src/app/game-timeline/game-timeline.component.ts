@@ -16,9 +16,11 @@ export class GameTimelineComponent implements OnChanges {
   @Input() tiles: Tile[];
 
   ngOnChanges(changes: SimpleChanges) {
+    //Get the tiles from the changes
     const tiles = changes['tiles'].currentValue;
     if (tiles != null) {
       tiles.filter(tile => tile.match != null).forEach(tile => {
+        //Get the date when the match was found
         const date = new Date(tile.match.foundOn);
 
         if (this.last.getFullYear() <= 1970 || this.last < date) {
@@ -32,6 +34,7 @@ export class GameTimelineComponent implements OnChanges {
   }
 
   historyChange() {
+    //Set the shown at time for each tile
     this.tiles.forEach(tile => {
       tile.shownAtTime = (this.last.getTime() === this.currentTime ? null : this.currentTime);
     });

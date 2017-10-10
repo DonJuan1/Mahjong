@@ -23,11 +23,13 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  //Log the player out and navigate to the login page
   logout(): void {
     this.api.logout();
     this.router.navigate(['login']);
   }
 
+  //Switch the theme of the website
   switchTheme(themeUrl) {
     var link = document.getElementById('theme');
     link.setAttribute('href', themeUrl);

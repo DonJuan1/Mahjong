@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Game } from '../models/game';
 import * as io from 'socket.io-client';
@@ -22,17 +22,20 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
   constructor(private api: ApiService, private route: ActivatedRoute) {
   }
 
+  //Can the history of the game viewed
   get canShowHistory() {
     return this.game.state === 'finished' && !this.canPlay;
   }
 
   ngOnInit() {
+    //Get the game id from the url parameters
     this.route.params.subscribe((params: Params) => {
       this.api.getGame(params.id).subscribe(game => {
         this.game = game;
 
         this.openSocket();
 
+        //Check the state of the received game
         if (this.game.state === 'playing') {
           this.gameStarted(this.game);
         } else if (this.game.state === 'finished') {
@@ -46,6 +49,7 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
     this.socket.disconnect();
   }
 
+  //Open a new socket connection
   private openSocket() {
     this.socket = io(`${this.api.host}?gameId=${this.game._id}`);
 
@@ -55,12 +59,17 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
     this.socket.on('end', () => this.gameEnded(this.game));
   }
 
+  //Called from socket when a new player joined the game
   playerJoined(data) {
     this.game.players.push(data);
   }
 
+  //Called from socket when a mathed is found
   matchFound(data) {
+    //Get the player who find the match
     const player = this.game.players.find(player => player._id === data[0].match.foundBy);
+
+    //Check if the player already has found a another match
     if (player.numberOfMatches == null) {
       player.numberOfMatches = 0;
     }
@@ -68,25 +77,29 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
     player.numberOfMatches += 1;
 
     data.forEach(tile => {
+      //Get the tiles that are matched
       const found = this.game.tiles.find(_tile => _tile._id === tile._id);
       found.match = tile.match;
     });
   }
 
+  //Check if the user is in the current game
   inGame() {
     return this.game.players.map(item => item._id).indexOf(this.api.email) > -1;
   }
 
+  //Called from socket if the game is started
   gameStarted(game: Game) {
     game.state = 'playing';
     this.api.gameTiles(game._id).subscribe(tiles => game.tiles = tiles);
     this.canPlay = this.inGame();
   }
 
+  //Called from socket if the game is ended
   gameEnded(game: Game) {
-    console.log("finished");
     game.state = 'finished';
 
+    //Check if the game has tiles
     if (game.tiles == null) {
       this.api.gameTiles(game._id).subscribe(tiles => game.tiles = tiles);
     }
@@ -96,28 +109,20 @@ export class GameLobbyComponent implements OnInit, OnDestroy {
   }
 
 
+  //Send the match tiles to the server
   onMatched(tiles: Tile[]) {
     this.api.matchTiles(this.game._id, tiles[0]._id, tiles[1]._id).subscribe(message => {
-      //this.toastr.error(JSON.parse(error._body).message);
     });
   }
 
+  //Show the tiles that are matched by the selected users
   usersChecked(users: User[]) {
     if (users.length === 0) {
       return this.game.tiles.forEach(tile => tile.forceShown = null);
     }
-    console.log("usersChecked");
 
     this.game.tiles.forEach(tile => {
       tile.forceShown = tile.match != null && users.map(user => user._id).indexOf(tile.match.foundBy) > -1;
     });
   }
-
-
-
-  showError(message: string) {
-    //this.toastr.error(message);
-    console.log(message);
-  }
-
 }

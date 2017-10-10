@@ -9,6 +9,7 @@ import { ApiService } from "../api.service";
 })
 export class GameChatboxComponent implements OnInit {
 
+  //Scrollcontainer of the scrollbar (Used to scroll the scrollbar down when a message appears)
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
   private chatSocket;
@@ -18,6 +19,7 @@ export class GameChatboxComponent implements OnInit {
   _game: Game;
   messageData: any[];
 
+  //Get the game for the socket
   @Input() set game(value: Game) {
     this._game = value;
     if (this._game != null) {
@@ -37,6 +39,7 @@ export class GameChatboxComponent implements OnInit {
     this.chatSocket.disconnect();
   }
 
+  //Send a new message to the chatsocket
   sendMessage(message) {
     this.chatSocket.emit('send message', {
       username: this.api.email,
@@ -45,6 +48,7 @@ export class GameChatboxComponent implements OnInit {
     })
   }
 
+  //Change visibility of the chatbox
   moveChatbox() {
     this.isOpen = !this.isOpen
 
@@ -56,11 +60,13 @@ export class GameChatboxComponent implements OnInit {
 
   }
 
+  //Open a new socket connection
   private openSocket() {
     this.chatSocket = io(`?gameId=${this._game._id}`);
     this.chatSocket.on('new message', data => this.newMessage(data));
   }
 
+  //Called when a new message is received from the socket
   private newMessage(data) {
     this.messageData.push(data);
     var audio = new Audio();
@@ -70,6 +76,7 @@ export class GameChatboxComponent implements OnInit {
     setTimeout(() => this.scrollToBottom(), 1);
   }
 
+  //Scroll the scrollbar down when a message appears
   private scrollToBottom(): void {
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
